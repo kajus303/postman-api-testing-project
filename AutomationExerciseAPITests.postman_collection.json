@@ -1,0 +1,332 @@
+{
+	"info": {
+		"_postman_id": "ec57db7a-fa66-4f9e-803f-76dbb0f9318d",
+		"name": "AutomationExerciseAPITests",
+		"description": "Collection of API tests for AutomationExercise, adjusted to test 'responseCode' in the JSON response.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38004750"
+	},
+	"item": [
+		{
+			"name": "All Products List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse response JSON",
+							"var jsonData = pm.response.json();",
+							"",
+							"// Validate responseCode in JSON",
+							"pm.test(\"Response code is 200\", function () {",
+							"    pm.expect(jsonData.responseCode).to.eql(200);",
+							"});",
+							"",
+							"// Validate response structure",
+							"pm.test(\"Response has 'products' array\", function () {",
+							"    pm.expect(jsonData).to.have.property('products');",
+							"    pm.expect(jsonData.products).to.be.an('array');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/productsList",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"productsList"
+					]
+				},
+				"description": "Retrieves a list of all products."
+			},
+			"response": []
+		},
+		{
+			"name": "All Products List Invalid Method",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse response JSON",
+							"var jsonData = pm.response.json();",
+							"",
+							"// Validate responseCode in JSON",
+							"pm.test(\"Response code is 405\", function () {",
+							"    pm.expect(jsonData.responseCode).to.eql(405);",
+							"});",
+							"",
+							"// Validate error message",
+							"pm.test(\"Correct error message\", function () {",
+							"    pm.expect(jsonData).to.have.property('message', 'This request method is not supported.');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/productsList",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"productsList"
+					]
+				},
+				"description": "Attempts to POST to 'productsList' endpoint which is not supported."
+			},
+			"response": []
+		},
+		{
+			"name": "All Brands List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse response JSON",
+							"var jsonData = pm.response.json();",
+							"",
+							"// Validate responseCode in JSON",
+							"pm.test(\"Response code is 200\", function () {",
+							"    pm.expect(jsonData.responseCode).to.eql(200);",
+							"});",
+							"",
+							"// Validate response structure",
+							"pm.test(\"Response has 'brands' array\", function () {",
+							"    pm.expect(jsonData).to.have.property('brands');",
+							"    pm.expect(jsonData.brands).to.be.an('array');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/brandsList",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"brandsList"
+					]
+				},
+				"description": "Retrieves a list of all brands."
+			},
+			"response": []
+		},
+		{
+			"name": "All Brands List Invalid Method",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse response JSON",
+							"var jsonData = pm.response.json();",
+							"",
+							"// Validate responseCode in JSON",
+							"pm.test(\"Response code is 405\", function () {",
+							"    pm.expect(jsonData.responseCode).to.eql(405);",
+							"});",
+							"",
+							"// Validate error message",
+							"pm.test(\"Correct error message\", function () {",
+							"    pm.expect(jsonData).to.have.property('message', 'This request method is not supported.');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/brandsList",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"brandsList"
+					]
+				},
+				"description": "Attempts to PUT to 'brandsList' endpoint which is not supported."
+			},
+			"response": []
+		},
+		{
+			"name": "Search Product",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Set default search term if not defined",
+							"if (!pm.variables.get('search_term')) {",
+							"    pm.variables.set('search_term', 'tshirt');",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse response JSON",
+							"var jsonData = pm.response.json();",
+							"",
+							"// Validate responseCode in JSON",
+							"pm.test(\"Response code is 200\", function () {",
+							"    pm.expect(jsonData.responseCode).to.eql(200);",
+							"});",
+							"",
+							"// Validate response structure",
+							"pm.test(\"Response has 'products' array\", function () {",
+							"    pm.expect(jsonData).to.have.property('products');",
+							"    pm.expect(jsonData.products).to.be.an('array');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "search_product",
+							"value": "{{search_term}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/searchProduct",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"searchProduct"
+					]
+				},
+				"description": "Searches for products matching the search term."
+			},
+			"response": []
+		},
+		{
+			"name": "Search Product Without Parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse response JSON",
+							"var jsonData = pm.response.json();",
+							"",
+							"// Validate responseCode in JSON",
+							"pm.test(\"Response code is 400\", function () {",
+							"    pm.expect(jsonData.responseCode).to.eql(400);",
+							"});",
+							"",
+							"// Validate error message",
+							"pm.test(\"Correct error message\", function () {",
+							"    pm.expect(jsonData).to.have.property('message', 'Bad request, search_product parameter is missing in POST request.');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{base_url}}/searchProduct",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"searchProduct"
+					]
+				},
+				"description": "Attempts to search without providing 'search_product' parameter."
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Login Invalid Method",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse response JSON",
+							"var jsonData = pm.response.json();",
+							"",
+							"// Validate responseCode in JSON",
+							"pm.test(\"Response code is 405\", function () {",
+							"    pm.expect(jsonData.responseCode).to.eql(405);",
+							"});",
+							"",
+							"// Validate error message",
+							"pm.test(\"Correct error message\", function () {",
+							"    pm.expect(jsonData).to.have.property('message', 'This request method is not supported.');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/verifyLogin",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"verifyLogin"
+					]
+				},
+				"description": "Attempts to DELETE to 'verifyLogin' endpoint which is not supported."
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://automationexercise.com/api",
+			"type": "string"
+		},
+		{
+			"key": "search_term",
+			"value": "tshirt",
+			"type": "string"
+		}
+	]
+}
