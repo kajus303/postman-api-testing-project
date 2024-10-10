@@ -1,4 +1,4 @@
-name: CI - API Tests
+name: API Tests
 
 on:
   push:
@@ -7,22 +7,19 @@ on:
     branches: [main]
 
 jobs:
-  run-api-tests:
-    name: Run API Tests with Newman
+  newman-tests:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "16"
-          cache: "npm"
 
-      - name: Install dependencies
-        run: npm i
+      - name: Install Dependencies
+        run: npm install
 
-      - name: Run Newman tests
+      - name: Run Newman Tests
         run: npm test
